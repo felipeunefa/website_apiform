@@ -1,0 +1,147 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+<template id="website_apiform" inherit_id="website.assets_frontend" name="website_apiform">
+    <xpath expr="/t" position="inside">
+            <script type="text/javascript" src="/website_apiform/static/src/js/boton_enviar.js"></script>
+
+    </xpath>
+</template>
+<template id="website_apiform.modal" name="ajax_error">
+    <div class="modal fade" id="AJAX_Modal" role="dialog" aria-labelledby="AJAXErrorModal" aria-hidden="true" >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&amp;times;</button>
+                        <h4 class="modal-title titulo" ></h4>
+                    </div>
+                    <div class="modal-body cuerpo">faf</div>
+                    <div class="modal-footer "><span class="pie"></span><button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button></div>
+                </div>
+            </div>
+        </div>
+</template>
+<template id="website_apiform.ajax_error" name="ajax_error">
+    <div class="modal fade" id="AJAXErrorModal" role="dialog" aria-labelledby="AJAXErrorModal" aria-hidden="true" >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&amp;times;</button>
+                        <h4 class="modal-title">Disculpe ha ocurrido un problema</h4>
+                    </div>
+                    <div class="modal-body"><p>Algo salió mal en el servidor. <strong class="text-danger">El cambio probablemente no se realizo,.</strong> Pulse F5 ó recarge la pagina</p></div>
+                    <div class="modal-footer"><button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button></div>
+                </div>
+            </div>
+        </div>
+</template>
+<!--
+panel crear
+-->
+<template id="website_apiform.panel_crear" name="panel formulario template">
+    <t t-call="website.layout">
+        <div id="wrap">
+            <div class="row mt32">
+                <div class="col-md-9 col-md-offset-1 ">
+                    <form id="form1" method="post" action="/usuarios/enviar" >
+                    <div t-attf-class="panel panel-#{css}">
+                        <div class="panel-heading" >
+                                <div class="row">
+                                    <div class="col-xs-3" align="left">
+                                        <h4 ><t t-esc="titulo"/></h4>
+                                    </div>
+                                    <div class="col-md-9" align="right">
+                                        <t t-if="url_boton_list!=''">
+                                            <a t-att-href="'%s' % (url_boton_list)" >
+                                            <button type="button" t-attf-class="btn btn-#{color_btn_lista} glyphicon glyphicon-#{ico_btn_lista}" />
+                                            </a>
+                                        </t>
+                                    </div>
+                                </div>
+                                
+                        </div>
+                        <div class="panel-body">
+                            
+                                <t t-call="#{template}" />
+                            
+                            
+                        </div>
+                        <div class="panel-footer" align="center">
+                            <t t-if="remover_btn_enviar=='no'">
+                                <button type="button" 
+                                        t-att-id="id_enviar" 
+                                        t-att-css="'%s js_submit' % (js_enviar)" 
+                                        t-attf-class="btn btn-#{color_btn_enviar} glyphicon glyphicon-send" > Enviar</button>
+
+                            </t>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </t>
+    <t t-call="website_apiform.ajax_error"/>
+    <t t-call="website_apiform.modal"/>
+</template>
+
+
+<template id="website_apiform.template_crear" name="ejemplo formulario ejemplo">
+<t t-set="titulo" t-value="parametros['titulo']" />
+<t t-set="url_boton_list" t-value="parametros['url_boton_list']" />
+<t t-set="template" t-value="parametros['template']" />
+<t t-set="js_enviar" t-value="parametros['js_enviar']" />
+<t t-set="css" t-value="parametros['css']" />
+<t t-set="color_btn_lista" t-value="parametros['color_btn_lista']" />
+<t t-set="ico_btn_lista" t-value="parametros['ico_btn_lista']" />
+<t t-set="remover_btn_enviar" t-value="parametros['remover_btn_enviar']" />
+<t t-set="color_btn_enviar" t-value="parametros['color_btn_enviar']" />
+<t t-set="id_enviar" t-value="parametros['id_enviar']" />
+<t t-call="website_apiform.panel_crear"/>
+</template>
+<!--
+panel vista tree
+-->
+<template id="website_apiform.panel_lista" name="Periodo">
+    <t t-call="website.layout">
+        <div id="wrap">
+            <div class="row mt32">
+                <div class="col-md-9 col-md-offset-1 ">
+                    <div t-attf-class="panel panel-#{css}">
+                        <div class="panel-heading">
+                            <h4 ><b><t t-esc="titulo"/></b></h4>
+                        </div>
+                        <div class="panel-body">
+                            <t t-if="url_boton_crear!=''">
+                                <a t-att-href="'%s' % (url_boton_crear)">
+                                    <button type="button" t-attf-class="btn btn-#{color_btn_crear} glyphicon glyphicon-#{icon_crear}" >Crear</button>
+                                </a>
+                            </t>
+                            <t t-call="#{template}" />
+                        </div>
+                        <div class="panel-footer">
+                              <div t-esc="pie"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+    <t t-call="website_apiform.ajax_error"/>
+    <t t-call="website_apiform.modal"/>
+
+</template>
+
+
+<template id="website_apiform.template_lista" name="ejemplo formulario ejemplo">
+    <t t-set="titulo" t-value="parametros['titulo']" />
+    <t t-set="url_boton_crear" t-value="parametros['url_boton_crear']" />
+    <t t-set="template" t-value="parametros['template']" />
+    <t t-set="icon_crear" t-value="parametros['icon_crear']" />
+    <t t-set="pie" t-value="parametros['pie']" />
+    <t t-set="css" t-value="parametros['css']" />
+    <t t-set="color_btn_crear" t-value="parametros['color_btn_crear']" />
+    <t t-call="website_apiform.panel_lista"/>
+</template>
+ </data>
+</openerp>
