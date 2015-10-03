@@ -1,7 +1,6 @@
 (function ($) {
     'use strict';
     console.debug("[apiform_panel] Custom JS for apiform_panel is loading...");
-
          var apiform_panel = apiform_panel || {};
          apiform_panel.context=function(form_id){
              var datos=$(form_id).serializeArray();

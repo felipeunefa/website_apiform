@@ -1,0 +1,27 @@
+.ejemplo_img {
+	position:relative;
+	float:left;
+	width:128px;
+	height:128px;
+	border:0px;
+	overflow:hidden;
+}
+
+.ejemplo_img_cont {
+	float:left;
+	position:absolute;
+	background:#000;
+	height:60px;
+	line-height:25px;
+	width:128px;
+	padding:20px;
+	opacity:.8; 
+	filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
+	-MS-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+	top:150px;
+	left:0px;
+	color:#FFF;
+	font-size:18px;
+	font-family:"Lucida Grande", Arial, sans-serif;
+	z-index:10;
+}

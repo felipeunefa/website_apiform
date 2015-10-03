@@ -21,21 +21,21 @@
 
 {
     'name': "API Formularios Web",
+    'category': 'Website',
     'summary': "",
     'description': """
+        hola mundo
 """,
     'author': "",
-    'website': "",
-
-    'category': 'Web site',
     'version': '0.1',
     'depends': ['website'],
     'data': [
         'views/templates.xml',
         'views/template_panel.xml',
     ],
-    'demo': [
+    'qweb': [
+        'static/src/xml/*.xml'
     ],
-    'tests': [
-    ],
+    'installable': True,
+    'application': True,
 }
