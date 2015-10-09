@@ -2,14 +2,11 @@
 
 import base64
 import logging
-import hashlib
 import json
 
 import openerp
 from openerp.addons.web import http
-from openerp.http import request, STATIC_CACHE
-
-import werkzeug.exceptions
+from openerp.http import request
 
 _logger = logging.getLogger(__name__)
 
@@ -20,13 +17,9 @@ class apiform_image(http.Controller):
     def image(self,image_base64,width,height, **kw):
         cr, uid, context = request.cr, request.uid, request.context
         values = []
-        headers = [('Content-Type', 'image/png')]
-        hashed_session = hashlib.md5(request.session_id).hexdigest()
-        retag = hashed_session
-        etag = request.httprequest.headers.get('If-None-Match')
         image_base6 = openerp.tools.image_resize_image(
                                                     base64_source=image_base64,
-                                                    size=(int(width),int(height)), 
+                                                    size=(int(height),int(width)), 
                                                     encoding='base64', 
                                                     filetype='PNG')
         values.append({

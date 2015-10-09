@@ -1,14 +1,6 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
-<template id="website_apiform" inherit_id="website.assets_frontend" name="website_apiform">
-    <xpath expr="/t" position="inside">
-            <link rel="stylesheet" href="/website_apiform/static/src/css/img.css"/>
-             <script type="text/javascript" src="/website_apiform/static/src/js/apiform_image.js"></script>
-             <script type="text/javascript" src="/website_apiform/static/src/js/boton_enviar.js"></script>
-             <script type="text/javascript" src="/website_apiform/static/src/js/apiform.js"></script>
-    </xpath>
-</template>
 <template id="website_apiform.modal" name="ajax_error">
     <div class="modal fade" id="AJAX_Modal" role="dialog" aria-labelledby="AJAXErrorModal" aria-hidden="true" >
             <div class="modal-dialog">
@@ -32,6 +24,7 @@
                         <h4 class="modal-title">Disculpe ha ocurrido un problema</h4>
                     </div>
                     <div class="modal-body"><p>Algo salió mal en el servidor. <strong class="text-danger">El cambio probablemente no se realizo,.</strong> Pulse F5 ó recarge la pagina</p></div>
+                    <div class="modal-body" id="error_server"></div>
                     <div class="modal-footer"><button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button></div>
                 </div>
             </div>
@@ -46,7 +39,10 @@ panel crear
         <div id="wrap">
             <div class="row mt32">
                 <div class="col-md-9 col-md-offset-1 ">
-                    <form id="form1" method="post" action="/usuarios/enviar" >
+                    <form id="form1" method="POST"
+                  action="/usuarios/enviar"
+                  enctype="multipart/form-data"
+                  target="fileframe">
                     <div t-attf-class="panel panel-#{css}">
                         <div class="panel-heading" >
                                 <div class="row">
@@ -71,7 +67,7 @@ panel crear
                         </div>
                         <div class="panel-footer" align="center">
                             <t t-if="remover_btn_enviar=='no'">
-                                <button type="button" 
+                                <button type="submit" 
                                         t-att-id="id_enviar" 
                                         t-att-css="'%s js_submit' % (js_enviar)" 
                                         t-attf-class="btn btn-#{color_btn_enviar} glyphicon glyphicon-send" > Enviar</button>
