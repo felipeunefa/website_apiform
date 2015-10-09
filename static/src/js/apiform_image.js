@@ -92,10 +92,6 @@
             var self=this;
             var return_base64;
             if ( input.files && input.files[0] ) {
-                 console.log('sahfkashfhasfkh');
-            console.log('sahfkashfhasfkh');
-            console.log('sahfkashfhasfkh');
-            console.log('sahfkashfhasfkh');
                 var FR= new FileReader();
                FR.onload = function(e) {
                     var id=input.name;

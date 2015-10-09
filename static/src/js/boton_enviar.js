@@ -57,6 +57,13 @@
                             $('.'+clave).html(valor)
                         });
                             }
+                     if (respuesta['redirect']){
+                            console.log(respuesta['redirect']);
+                            console.log(respuesta['redirect']);
+                            console.log(respuesta['redirect']);
+                            console.log(respuesta['redirect']);
+                            $(location).attr('href',respuesta['redirect']);
+                            }
                 }).fail(function (source, error) {
                    $('#error_server').html('<strong class="text-danger">Tipo de debug</strong>'+
                                             '<p>'+error.data.name+': '+error.data.message+'</p>'+

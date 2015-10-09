@@ -98,22 +98,16 @@ class validar():
         return errors
 
     def validar_text(self,campo,post):
-        print campo
         errors = {}
         answer = post[campo['name']].strip()
         if not answer:
             errors.update({campo['attr']:'Es Obligatorio'})
         if answer and campo.has_key('min') and campo.has_key('max'):
-            print 'sdjflasjflkjasfljals'
-            print 'sdjflasjflkjasfljals'
-            print 'sdjflasjflkjasfljals'
-            print 'sdjflasjflkjasfljals'
             if not (campo['min'] <= len(answer) <= campo['max']):
                 errors.update({campo['attr']:'No Cumple el tamaño con lo requerido'})
         return errors
         
     def validar_email(self,campo,post):
-        print campo
         errors = {}
         answer = post[campo['name']].strip()
         if not answer:
@@ -123,7 +117,7 @@ class validar():
                 errors.update({campo['attr']: (' El Formato no es de un Email.')})
         if answer and campo.has_key('min') and campo.has_key('max'):
             if not (campo['min'] <= len(answer) <= campo['max']):
-                errors.update({campo['attr']:'No Cumple el tamaño con lo requerido'})
+                errors.update({campo['attr']:'No Cumple el tamaño requerido'})
         return errors
 
     def validar_numerical_text(self,campo,post):
