@@ -13,8 +13,8 @@
                  if($(this).attr('widget')=='apiform_image'){
                      name=this.name
                      value=this.src
-                     value=value.split(',');
-                     console.log(value)
+                     if(value){
+                         value=value.split(',');
                      value=value[1]
                      datosfile={
                      'name':name,
@@ -23,6 +23,7 @@
                     datos_post+='&'+name+'='+value;
                     datos_form.push(datosfile);
                      }
+                         }
                  
                  });
                 var datos= new Object();
@@ -34,7 +35,6 @@
              }
          apiform_panel.ajax={
             enviar:function(destino,datos){
-                  event.preventDefault();
                   openerp.jsonRpc(destino, 'call', datos).then(function (respuesta) {
                     if (respuesta['modal']){
                         $.each(respuesta['modal'], function( clave, valor ) {
@@ -58,10 +58,6 @@
                         });
                             }
                      if (respuesta['redirect']){
-                            console.log(respuesta['redirect']);
-                            console.log(respuesta['redirect']);
-                            console.log(respuesta['redirect']);
-                            console.log(respuesta['redirect']);
                             $(location).attr('href',respuesta['redirect']);
                             }
                 }).fail(function (source, error) {
@@ -91,7 +87,7 @@
              
              
          
-         $("#id_enviar").click( function( event ) {
+         $("#id_enviar").click( function() {
              var context=apiform_panel.context('#form1');
              apiform_panel.ajax.enviar(context.destino,context.datos);
              });

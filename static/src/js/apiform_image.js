@@ -82,9 +82,13 @@
                  
                      });
             $('.oe_form_binary_file_clear').click(function(){
-                 $(input_file).attr({ value: '' });
+                 
                  var id=$(input_file).attr('name')
                  $('#'+id).attr( "src", self.placeholder);
+                 $('#'+input_file.id).val('');
+                 $('#'+input_file.id).attr("src",'');
+                 console.log(input_file);
+                 console.log(input_file);
                 })
             
             },

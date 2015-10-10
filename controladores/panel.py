@@ -12,7 +12,7 @@ from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT as DF
 
 
 _logger = logging.getLogger(__name__) 
-
+ 
 parametros_list={'titulo':'',
             'url_boton_crear':'',
             'template':'',
@@ -32,13 +32,13 @@ parametros_crear={'titulo':'',
               'color_btn_enviar':'primary',
               'color_btn_lista':'primary',
               'id_enviar':'id_enviar',
+              'action':'/empty_action',
                 }
 
 
 def panel_lista(datos={'parametros':'',}):
     for clave in datos['parametros']:
         try:   
-                 parametros_list[clave]
                  parametros_list[clave]=datos['parametros'][clave]
         except Exception:
             msg = """Error en la clave en el parametro de parametros_list
@@ -63,6 +63,9 @@ def panel_crear(datos={'parametros':'',}):
             raise werkzeug.exceptions.BadRequest(msg)
     datos['parametros']=parametros_crear
     return http.request.website.render('website_apiform.template_crear', datos)
+
+
+
 
 def dict_keys_startswith(dictionary, string):
     '''Returns a dictionary containing the elements of <dict> whose keys start
@@ -94,14 +97,14 @@ class validar():
         errors = {}
         answer = post[campo['name']].strip()
         if not answer:
-            errors.update({campo['attr']: 'Campo obligatorio'})
+            errors.update({campo['attr']: ' es obligatorio.'})
         return errors
 
     def validar_text(self,campo,post):
         errors = {}
         answer = post[campo['name']].strip()
         if not answer:
-            errors.update({campo['attr']:'Es Obligatorio'})
+            errors.update({campo['attr']:' es Obligatorio.'})
         if answer and campo.has_key('min') and campo.has_key('max'):
             if not (campo['min'] <= len(answer) <= campo['max']):
                 errors.update({campo['attr']:'No Cumple el tamaño con lo requerido'})
@@ -111,7 +114,7 @@ class validar():
         errors = {}
         answer = post[campo['name']].strip()
         if not answer:
-            errors.update({campo['attr']:'Es Obligatorio'})
+            errors.update({campo['attr']:'es Obligatorio.'})
         if answer and campo['type']=='email':
             if not re.match(r"[^@]+@[^@]+\.[^@]+", answer):
                 errors.update({campo['attr']: (' El Formato no es de un Email.')})
@@ -182,3 +185,5 @@ class validar():
         if not answer_candidates:
             errors.update({campo['attr']:' Es Obligatorio'})
         return errors
+        
+

@@ -39,10 +39,8 @@ panel crear
         <div id="wrap">
             <div class="row mt32">
                 <div class="col-md-9 col-md-offset-1 ">
-                    <form id="form1" method="POST"
-                  action="/usuarios/enviar"
-                  enctype="multipart/form-data"
-                  target="fileframe">
+                    <form id="form1"  
+                  t-att-action="'%s' % (action)">
                     <div t-attf-class="panel panel-#{css}">
                         <div class="panel-heading" >
                                 <div class="row">
@@ -67,7 +65,7 @@ panel crear
                         </div>
                         <div class="panel-footer" align="center">
                             <t t-if="remover_btn_enviar=='no'">
-                                <button type="submit" 
+                                <button type="button" 
                                         t-att-id="id_enviar" 
                                         t-att-css="'%s js_submit' % (js_enviar)" 
                                         t-attf-class="btn btn-#{color_btn_enviar} glyphicon glyphicon-send" > Enviar</button>
@@ -96,6 +94,7 @@ panel crear
 <t t-set="remover_btn_enviar" t-value="parametros['remover_btn_enviar']" />
 <t t-set="color_btn_enviar" t-value="parametros['color_btn_enviar']" />
 <t t-set="id_enviar" t-value="parametros['id_enviar']" />
+<t t-set="action" t-value="parametros['action']" />
 <t t-call="website_apiform.panel_crear"/>
 </template>
 <!--
