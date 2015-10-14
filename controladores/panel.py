@@ -21,7 +21,7 @@ parametros_list={'titulo':'',
             'css':'info',
             'color_btn_crear':'primary',
                 }
-parametros_crear={'titulo':'',
+parametros_post={'titulo':'',
               'url_boton_list':'',
               'template':'',
               'js_enviar':'',
@@ -33,6 +33,7 @@ parametros_crear={'titulo':'',
               'color_btn_lista':'primary',
               'id_enviar':'id_enviar',
               'action':'/empty_action',
+              'nombre_bt_accion':'Enviar'
                 }
 
 
@@ -50,18 +51,18 @@ def panel_lista(datos={'parametros':'',}):
     datos['parametros']=parametros_list
     return http.request.website.render('website_apiform.template_lista', datos)
 
-def panel_crear(datos={'parametros':'',}):
+def panel_post(datos={'parametros':'',}):
     for clave in datos['parametros']:
         try:
-                parametros_crear[clave]=datos['parametros'][clave]
+                parametros_post[clave]=datos['parametros'][clave]
         except Exception:
             msg = """Error en la clave en el parametro de parametros_crear
                      coloco erroneamente %s:  %r los parametros para 
                      redireccionar a un panel de tipo lista son los 
-                     siguientes: %s""" % (clave,request,parametros_crear)
+                     siguientes: %s""" % (clave,request,parametros_post)
             _logger.error('%s ' , msg)
             raise werkzeug.exceptions.BadRequest(msg)
-    datos['parametros']=parametros_crear
+    datos['parametros']=parametros_post
     return http.request.website.render('website_apiform.template_crear', datos)
 
 

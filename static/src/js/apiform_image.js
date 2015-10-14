@@ -138,7 +138,10 @@
             var src= $(input).attr('src');
             if (!src){
                src= this.placeholder;
-                } 
+                }else{
+                    src='data:image/png;base64,'+src
+                    $(input).attr('src',src);
+                    } 
             var id= $(input).attr('name');
             if (!id){
                id= 'idname'+cont;

@@ -141,5 +141,8 @@ panel vista tree
     <t t-set="color_btn_crear" t-value="parametros['color_btn_crear']" />
     <t t-call="website_apiform.panel_lista"/>
 </template>
+
+
+
  </data>
 </openerp>
