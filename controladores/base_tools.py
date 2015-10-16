@@ -2,6 +2,11 @@
 
 from openerp.http import request
 from openerp import http,tools, api,SUPERUSER_ID
+import werkzeug.utils
+import werkzeug.wrappers
+from openerp.osv import osv
+from openerp import http
+
 
 #~ este metodo recibe los nombre del grupo y las categoria 
 #~ que no desea y devuelve los ids con sus nobres y los ids 
@@ -75,3 +80,20 @@ def control_groups_name(category_name,control_groups_name,user_ids,not_groups_na
                 groups['groups'].pop(idice)
                                 
     return {'groups':groups['groups']}
+
+
+LOGIN='/web/login?inactivo=True'
+def users_active(user_id):
+    print user_id
+    registry = http.request.registry
+    cr=http.request.cr
+    uid=http.request.uid
+    context = http.request.context
+    res_users_obj = registry.get('res.users')
+    res_users_data = res_users_obj.browse(
+                            cr,
+                            SUPERUSER_ID,
+                            [user_id])
+    return res_users_data.activo
+    
+    

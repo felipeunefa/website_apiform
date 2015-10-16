@@ -30,6 +30,9 @@
             </div>
         </div>
 </template>
+<template id="website_apiform.erooruno" name="ajax_error">
+   <h1>Hola mundo</h1>
+</template>
 <!--
 panel crear
 -->
