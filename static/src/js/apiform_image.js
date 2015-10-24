@@ -76,7 +76,9 @@
                   if(input_file.id==$(this).attr('id')){
                   $('#'+input_file.id).click();
                   $('#'+input_file.id).change(function() {
+                      $('#id_enviar').hide();
                       self.readImage(this,self);
+                      $('#id_enviar').show();
                   });
                   }
                  

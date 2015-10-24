@@ -56,6 +56,10 @@ def groups_category(group_name,not_category_name=None):
 #~ devuelve una dicionario con los grupos filtrados
 
 def control_groups_name(category_name,control_groups_name,user_ids,not_groups_name=None):
+    print 'control_groups_name'
+    print control_groups_name
+    print control_groups_name
+    print control_groups_name
     if not not_groups_name:
         not_groups_name={}
     registry = http.request.registry
