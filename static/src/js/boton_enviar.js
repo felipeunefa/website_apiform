@@ -36,13 +36,22 @@
                                 campovacios='si';
                                 cuerpomodal+= 'El Campo '+' '+mensaje+' </br>';
                                 }
+                                        });
+            $(form_id).find('input[type=number]').each(function(){
+                            var value=$(this).val();
+                            var required=$(this).attr('required');
+                            var mensaje=$(this).attr('mensaje');
+                            if($.trim(value)=='' && required=='required' && typeof mensaje != 'undefined'){
+                                campovacios='si';
+                                cuerpomodal+= 'El Campo '+' '+mensaje+' </br>';
+                                }
+                                        });
             if (campovacios=='si'){
                 $('.cuerpo').html('<strong class="text-danger">'+cuerpomodal+'<br>¡Requerido(s)!</strong>');
                 $('.titulo').html('<strong>Formulario Incompleto.</strong>');
                 $('#AJAX_Modal').modal('show');
                 return {campovacios:campovacios}
                 }
-                                        });
              $(form_id).find('input[type="file"]').each(function(input){
                  var input=this;
                  var cargaImagen=new openerp.website.cargaImagen();
