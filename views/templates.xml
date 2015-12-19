@@ -20,6 +20,7 @@
              <script type="text/javascript" src="/website_apiform/static/src/js/apiform.js"></script>
              <link href='/website_apiform/static/src/lib/progression/progression.min.css' rel='stylesheet' type='text/css' />
             <script type="text/javascript" src="/website_apiform/static/src/lib/progression/progression.min.js"></script>
+            <script type="text/javascript" src="/website_apiform/static/src/js/tabla_scroll_ancho.js"></script>
            
     </xpath>
 </template>
