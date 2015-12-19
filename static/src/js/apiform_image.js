@@ -12,7 +12,7 @@
         template: 'cargaImagen',
         base646:'lolol',
         placeholder: "/website_apiform/static/src/images/3d_user.png",
-        MAIN_TEMPLATE : '<a href="#"><div class="ejemplo_img" >\n' +
+        MAIN_TEMPLATE : '<a><div class="ejemplo_img" >\n' +
         '<img\n' +
                 'css="story-small"\n' +
                 'src="defaults.src"\n' +
@@ -27,10 +27,12 @@
         '   </div>\n' +
         '</div></a>',
         start: function (input_file) {
-            console.log(input_file.type);
+            if(input_file.placeholder){
+                this.placeholder=input_file.placeholder;
+                }
             var self = this;
             if( ! window.FileReader ) {
-                console.log('no soprta')
+                console.log('no soporta')
                 alert('ERROR Disculpe: Usted debe actualizar su navegado \
                         para que el sistema funcione....');
                     return; // No soportado
@@ -109,14 +111,32 @@
                     var height=defaults.height.replace('px','');
                     width=width.replace('%','');
                     height=height.replace('%','');
-                    openerp.jsonRpc("/website_apiform/apiform_image/base64_size", 'call', {
+                    console.log(input);
+                    console.log(input.placeholder);
+                    console.log(base64[0])
+                    console.log(base64[0])
+                    console.log(base64[0])
+                    if(base64[0]=='data:application/pdf;base64'){
+                        $('#'+id).attr( "src", '/website_apiform/static/src/images/pdf.png');
+                            $(input).attr('src',return_base64);
+                    }else{
+                    if(!$(input).attr('transform-size')){
+                        $('#'+id).attr( "src", return_base64 );
+                        $(input).attr('src',return_base64);
+                    }else{
+                        openerp.jsonRpc("/website_apiform/apiform_image/base64_size", 'call', {
                         'image_base64': base64[1],
                         'width': width,
                         'height': height}).then(function(res){
                              $('#'+id).attr( "src", res[0].base64 );
                              $(input).attr('src',res[0].base64);
                             });
-                };       
+                    }
+                    }
+                   
+                };
+                console.log('input.files[0]')       
+                        
                 FR.readAsDataURL(input.files[0]);
                 }
               
@@ -163,6 +183,33 @@
         
         
         });
+        
+        
+        
+                 $('.js_file_apiform').on('fileloaded', function(evento, archivo, previewId, indice, lector){
+                    var name =$(this).attr('name');
+                    var input=this;
+                    var file_name=archivo.name;
+                    var preview_id=previewId
+                    console.log(name);
+                    var FR= new FileReader();
+                    FR.onload = function(e) {
+                           $(input).after('<input type="hidden" value="'+e.target.result+'" file-name="'+file_name+'" preview-id="'+preview_id+'" input-file-name="'+name+'" name="'+name+'-'+$('input[input-file-name="'+name+'"]').length+'" />');
+                           }
+                    FR.readAsDataURL(archivo);
+                    });
+                    
+                
+                
+                $('.js_file_apiform').on('filecleared', function(event) {
+                    $('input[input-file-name="'+this.name+'"]').remove();
+                });
+                
+                $('.kv-file-remove').live('click', function(event) {
+                    $('input[preview-id="'+$(this).parent().parent().parent().parent()[0].id+'"]').remove();
+                });
+
+
         console.debug("[apiform_file] Custom JS for apiform_panel is loading...");
 
 })();

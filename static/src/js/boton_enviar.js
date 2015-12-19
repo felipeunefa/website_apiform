@@ -3,16 +3,53 @@
     console.debug("[apiform_panel] Custom JS for apiform_panel is loading...");
          var apiform_panel = apiform_panel || {};
          apiform_panel.context=function(form_id){
+             console.log(form_id);
              var datosfile;
+             var campovacios='no';
+             var cuerpomodal='';
+             var opcionesRadio= new Object();
              var datos_form=$(form_id).serializeArray();
              var destino=$(form_id).attr('action');
              var datos_post=$(form_id).serialize();
+             //~ $(form_id).find('input:file').each(function(){
+                            //~ 
+                      //~ });
+                
+            $(form_id).find('input:radio').each(function(){
+                        var name=$(this).attr('name');
+                        var required=$(this).attr('required');
+                        var mensaje=$(this).attr('mensaje');
+                        var value=$(form_id+' input:radio[name='+name+']:checked').val();
+                        if (typeof value == 'undefined' && required=='required' && typeof mensaje != 'undefined') {
+                            campovacios='si';
+                           opcionesRadio[''+mensaje+'']=mensaje
+                            }
+                        });
+            $.each(opcionesRadio,function(index,opcion){
+                    cuerpomodal+='Las opciones de: '+' '+opcion+'</br>';;
+                });
+            $(form_id).find('input:text, textarea').each(function(){
+                            var value=$(this).val();
+                            var required=$(this).attr('required');
+                            var mensaje=$(this).attr('mensaje');
+                            if($.trim(value)=='' && required=='required' && typeof mensaje != 'undefined'){
+                                campovacios='si';
+                                cuerpomodal+= 'El Campo '+' '+mensaje+' </br>';
+                                }
+            if (campovacios=='si'){
+                $('.cuerpo').html('<strong class="text-danger">'+cuerpomodal+'<br>¡Requerido(s)!</strong>');
+                $('.titulo').html('<strong>Formulario Incompleto.</strong>');
+                $('#AJAX_Modal').modal('show');
+                return {campovacios:campovacios}
+                }
+                                        });
              $(form_id).find('input[type="file"]').each(function(input){
+                 var input=this;
                  var cargaImagen=new openerp.website.cargaImagen();
                  var name,value;
-                 if($(this).attr('widget')=='apiform_image'){
-                     name=this.name
-                     value=this.src
+                 if($(input).attr('widget')=='apiform_image'){
+                     name=input.name
+                     value=input.src
                      if(value){
                          value=value.split(',');
                      value=value[1]
@@ -24,34 +61,43 @@
                     datos_form.push(datosfile);
                      }
                          }
+                
                  
                  });
+               
                 var datos= new Object();
                  $.each(datos_form,function(name,value){
                     var input;
                      datos[''+value.name+'']=value.value;
                      });
-             return {datos:datos,destino:destino,datos_post:datos_post}
+             return {datos:datos,destino:destino,datos_post:datos_post,campovacios:campovacios}
              }
          apiform_panel.ajax={
-            enviar:function(destino,datos){
-                  openerp.jsonRpc(destino, 'call', datos).then(function (respuesta) {
+            enviar:function(destino,datos,panramentros){
+                     $(panramentros['gif']).show()
+                     $(panramentros['boton']).hide()
+                     openerp.jsonRpc(destino, 'call', datos).then(function (respuesta) {
                     if (respuesta['modal']){
                         $.each(respuesta['modal'], function( clave, valor ) {
                             $('.'+clave).html(valor)
                         });
+                        $(panramentros['gif']).hide()
+                     $(panramentros['boton']).show()
                          $('#AJAX_Modal').modal('show');
                         }
                     if (respuesta['error_campos']){
-                        console.log(respuesta['error_campos'])
                         var cuerpo=' ';
                         $.each(respuesta['error_campos'], function( clave, valor ) {
                             cuerpo+=clave+' '+valor+'<br>';
                         });
                         $('.cuerpo').html('<strong class="text-danger">'+cuerpo+'</strong>');
-                        $('.titulo').html('<strong>Error de campos de Formularios.</strong>')
+                        $('.titulo').html('<strong>Error de campos de Formularios.</strong>');
                          $('#AJAX_Modal').modal('show');
-                        }
+                        }else{
+                                if(typeof panramentros['fn'] != 'undefined'){
+                                    panramentros['fn'](panramentros['fn_parametros'],respuesta)
+                                    }
+                            }
                     if (respuesta['mycontext']){
                         $.each(respuesta['mycontext'], function( clave, valor ) {
                             $('.'+clave).html(valor)
@@ -60,6 +106,8 @@
                      if (respuesta['redirect']){
                             $(location).attr('href',respuesta['redirect']);
                             }
+                    $(panramentros['gif']).hide()
+                     $(panramentros['boton']).show()
                 }).fail(function (source, error) {
                    $('#error_server').html('<strong class="text-danger">Tipo de debug</strong>'+
                                             '<p>'+error.data.name+': '+error.data.message+'</p>'+
@@ -67,10 +115,29 @@
                                             '<p>'+error.data.debug+'</p>');
                     $('#AJAXErrorModal').modal('show');
                 });
+                
             }
+            
              }
              
+             //~ creo el pliguin del apiform_panel donde le digo que si le pansan un parametro
+             //~ llamado context retorne return apiform_panel.context($this);
+             //~ este metodo devuelve los siguintes datos: {datos:datos,destino:destino,datos_post:datos_post}
+             //~ de lo contrario devuelve el objeto apiform_panel con el cual pueden llamar a la clase apiform_panel.ajax
+             //~ y en esta apunta a su metodo apiform_panel.ajax.enviar el cual recibe como parametros destino,datos
+             //~ ejemplo:
              
+             //~ $(".clase o id_del_boton ").click( function( event ) {
+            //~ var v=$('#id_del_formulario').apiform_panel();
+                    //~ optienes el contexto del formulario con v.context
+            //~ var conte=v.context('#id_del_formulario');
+                    //~ puedes recorrer los compos del formulario de la siguiente manera
+             //~ $.each(conte['datos'], function( clave, valor ) {
+                 //~ console.log(valor.value)
+                //~ 
+                 //~ });
+            //~ v.ajax.enviar(conte.destino,conte.datos_post)
+             //~ });  
             $.fn.apiform_panel = function (options) {
                 var $this = $(this), data = $this.data('apiform_panel');
                 if (options== 'context') {
@@ -88,8 +155,14 @@
              
          
          $("#id_enviar").click( function() {
+             var form=$(this).attr('form1');
+             var gif=$('#img-'+form);
              var context=apiform_panel.context('#form1');
-             apiform_panel.ajax.enviar(context.destino,context.datos);
+             if (context.campovacios=='no'){
+                  var panramentros={'gif':gif,'boton':this}
+                 apiform_panel.ajax.enviar(context.destino,context.datos,panramentros);
+             }
+            
              });
          
     //~ Envio de checkbox bootstrapSwitch

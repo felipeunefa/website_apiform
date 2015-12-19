@@ -27,3 +27,19 @@
 	font-family:"Lucida Grande", Arial, sans-serif;
 	z-index:10;
 }
+
+.panel-body.active {
+    background-color: #F5F5F5;
+}
+.panel-body.info {
+    background-color: #d9edf7;
+}
+.panel-body.warning {
+    background-color: #fcf8e3;
+}
+.panel-body.success {
+    background-color: #dff0d8;
+}
+.panel-body.danger {
+    background-color: #f2dede;
+}
