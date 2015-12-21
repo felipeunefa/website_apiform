@@ -106,13 +106,10 @@ class validar():
            
            - post= diccionarios con los valores de la vista
            - pivote= primer string de las claves del diccionario que representa el elemento comun
-           - dict_principal y dict_sumplente representa la estructura que se requiere para armar el one2many
+           - dict_principal  representa la estructura que se requiere para armar el one2many
            
         """
         datos_campos=dict_keys_startswith(post,pivote)
-        print datos_campos
-        print datos_campos
-        print datos_campos
         datos_filtrados=datos_campos.keys()
         vals=[]
         datos_dicts=[]
