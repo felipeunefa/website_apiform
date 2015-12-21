@@ -41,9 +41,11 @@ panel crear
         <t t-set="additional_title"><t t-esc="titulo"/></t>
         <div id="wrap">
             <div class="row mt32">
-                <div class="col-md-9 col-md-offset-1 ">
-                    <form id="form1"  
-                  t-att-action="'%s' % (action)">
+                <div class="col-md-10 col-md-offset-1 ">
+                    <form t-attf-id="#{id_form}"  
+                  t-att-action="'%s' % (action)"
+                  enctype="multipart/form-data"
+                  runat="server" >
                     <div t-attf-class="panel panel-#{css}">
                         <div class="panel-heading" >
                                 <div class="row">
@@ -60,7 +62,7 @@ panel crear
                                 </div>
                                 
                         </div>
-                        <div class="panel-body">
+                        <div t-attf-class="panel-body #{css_background}">
                             
                                 <t t-call="#{template}" />
                             
@@ -71,7 +73,7 @@ panel crear
                                 <button type="button" 
                                         t-att-id="id_enviar" 
                                         t-att-css="'%s js_submit' % (js_enviar)" 
-                                        t-attf-class="btn btn-#{color_btn_enviar} glyphicon glyphicon-send" > Enviar</button>
+                                        t-attf-class="btn btn-#{color_btn_enviar} glyphicon glyphicon-send" > Guardar</button>
 
                             </t>
                         </div>
@@ -92,11 +94,13 @@ panel crear
 <t t-set="template" t-value="parametros['template']" />
 <t t-set="js_enviar" t-value="parametros['js_enviar']" />
 <t t-set="css" t-value="parametros['css']" />
+<t t-set="css_background" t-value="parametros['css_background']" />
 <t t-set="color_btn_lista" t-value="parametros['color_btn_lista']" />
 <t t-set="ico_btn_lista" t-value="parametros['ico_btn_lista']" />
 <t t-set="remover_btn_enviar" t-value="parametros['remover_btn_enviar']" />
 <t t-set="color_btn_enviar" t-value="parametros['color_btn_enviar']" />
 <t t-set="id_enviar" t-value="parametros['id_enviar']" />
+<t t-set="id_form" t-value="parametros['id_form']" />
 <t t-set="action" t-value="parametros['action']" />
 <t t-call="website_apiform.panel_crear"/>
 </template>
@@ -108,15 +112,20 @@ panel vista tree
          <t t-set="additional_title"><t t-esc="titulo"/></t>
         <div id="wrap">
             <div class="row mt32">
-                <div class="col-md-9 col-md-offset-1 ">
+                <div class="col-md-10 col-md-offset-1 ">
                     <div t-attf-class="panel panel-#{css}">
                         <div class="panel-heading">
                             <h4 ><b><t t-esc="titulo"/></b></h4>
                         </div>
                         <div class="panel-body">
                             <t t-if="url_boton_crear!=''">
+                                 <img style="display:none"
+                                        width="40px"
+                                        t-att-id="'img-idform1'"
+                                        height="40px"
+                                        src="/web/static/src/img/throbber-large.gif"/>
                                 <a t-att-href="'%s' % (url_boton_crear)">
-                                    <button type="button" t-attf-class="btn btn-#{color_btn_crear} glyphicon glyphicon-#{icon_crear}" >Crear</button>
+                                    <button type="button" form="idform1" t-attf-class="btn btn-#{color_btn_crear} glyphicon glyphicon-#{icon_crear}" >Crear</button>
                                 </a>
                             </t>
                             <t t-call="#{template}" />
@@ -146,7 +155,24 @@ panel vista tree
     <t t-call="website_apiform.panel_lista"/>
 </template>
 
-
+<!--
+ template redireccionamiento de error
+-->
+<template id="website_apiform.mensaje" name="Mensaje del apiform">
+        <t t-call="website.layout">
+            <div class="wrap">
+                <div class="container">
+                    <div class="jumbotron mt32">
+                        <h2><t t-esc="titulo"/></h2>
+                        <h3><p t-esc="mensaje"></p></h3>
+                        <a t-att-href="'%s' % (volver)">
+                                    <button type="button" class="btn btn-info" >Volver</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
 
  </data>
 </openerp>

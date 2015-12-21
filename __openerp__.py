@@ -32,6 +32,7 @@
     'data': [
         'views/templates.xml',
         'views/template_panel.xml',
+        'views/assets.xml',
     ],
     'qweb': [
         'static/src/xml/*.xml'
