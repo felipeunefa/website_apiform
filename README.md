@@ -9,7 +9,7 @@ entre otros. Adaptados y configurado para ayudarte a ganar tiempo para tú dise�
 de los formularios en la vista website. 
 
 
-Las herramientas que le ofrecer  esta Api son las siguientes:
+Las herramientas que le ofrece esta Api son las siguientes:
 
 1- Rápida creación de una vista tree en la website, para mostrar los registos de su modelo. 
 
