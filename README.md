@@ -11,9 +11,9 @@ de los formularios en la vista website.
 
 Las herramientas que le ofrecer  esta Api son las siguientes:
 
-1- Herramientas para la rápida creación de una vista tree en la website, para mostrar los registos de su modelo. 
+1- Rápida creación de una vista tree en la website, para mostrar los registos de su modelo. 
 
-2- Herramientas para la rápida creación de los formularios en la website de los modelos.
+2- Rápida creación de los formularios en la website de los modelos.
     2.1- Fácil Validación de los campos del lado del cliente y del servidor.
     2.2- Mensaje de error y éxito de guardado de registro.
     3.3- Mensajes de alertas 
